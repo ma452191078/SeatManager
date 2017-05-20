@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>天气预报</title>
+
+    <script src="../js/common.js"></script>
+    <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/cover.css" rel="stylesheet">
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?1ace5771cdaa36bb4b6883c12c69b85a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript">
+
+        window.onload = getWeather;
+
+        function getWeather(){
+
+            var _url = path + "/seatInfo/getWeather.action";
+            var parameter = {};
+            parameter["key"] = "";
+            $.ajax({
+                url : _url,
+                type : "post",
+                dataType : "json",
+                data : parameter,
+                beforeSend : function(){
+                },
+                success : function(data){
+                    if(data.flag == "s"){
+                        $("#tips").html("");
+                        var realtime = data.realtime;
+                        var weather = realtime.weather;
+                        var wind = realtime.wind;
+                        var fature = data.weather;
+                        $("#tips").append(
+                            "<p>" + weather.info + "，" + weather.temperature + "℃，" + wind.direct + wind.power +"</p>"
+                        );
+
+                        $.each(fature, function(i,item){
+                            var day = item.info.day;
+                            var night = item.info.night;
+                            $("#wbody").append(
+                                "<tr>" +
+                                "<td>" + item.date.substring(5,10) + "</td>" +
+                                "<td>" + day[1]  + "</td>" +
+                                "<td>" + day[2] + "~" + night[2] + "℃" + "</td>" +
+                                + "</tr>"
+                            );
+                        });
+                    }else{
+
+                    }
+                },
+                error : function(){
+
+                }
+            });
+        }
+    </script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?1ace5771cdaa36bb4b6883c12c69b85a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+</head>
+<body>
+<div class="container">
+    <div class="row page_head">
+        <img alt="" src="../image/pageHead.png" class="col-md-7 col-sm-7 col-xs-12">
+        <ul class="nav masthead-nav">
+            <li id="inLi" ><a href="search.html" target="_parent" >座次查询</a></li>
+            <li id="prLi"><a href="programme.html" target="_parent" >会议日程</a></li>
+            <li class="active" id="weLi"><a href="weather.html" target="_parent" >天气预报</a></li>
+        </ul>
+    </div>
+    <div class="row page_body table-responsive">
+        <p class="lead">当前天气</p>
+        <div id="tips" name="tips" >
+            <p class="lead">----</p>
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>日期</th>
+                <th>天气</th>
+                <th>温度</th>
+            </tr>
+            </thead>
+            <tbody id="wbody">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="../../bootstrap/js/bootstrap.min.js"></script>
+<script src="../js/common.js"></script>
+</html>

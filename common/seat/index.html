@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>座次查询</title>
+
+    <script src="../js/common.js"></script>
+    <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/cover.css" rel="stylesheet">
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?1ace5771cdaa36bb4b6883c12c69b85a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="row page_head">
+            <img alt="" src="../image/pageHead.png" class="col-md-7 col-sm-7 col-xs-12">
+            <ul class="nav masthead-nav">
+                <li class="active" id="inLi" ><a href="search.html" target="_parent" >座次查询</a></li>
+                <li id="prLi"><a href="programme.html" target="_parent" >会议日程</a></li>
+                <li id="weLi"><a href="weather.html" target="_parent" >天气预报</a></li>
+            </ul>
+        </div>
+        <div class="row page_body">
+            <div style="margin: 20px;">
+                <input type="text" class="form-control textCenter" id="inputName" name="inputName" placeholder="输入您的姓名">
+            </div>
+            <p class="lead">
+                <a href="javascript:getMySeat();" class="btn btn-lg btn-default">查&nbsp;&nbsp;询</a>
+            </p>
+
+            <div id="seatList" name="seatList">
+
+            </div>
+            <div id="tips" name="tips" style="display:none;">
+                <p class="lead">未查询到您的座次，请仔细核对您输入的信息，若信息无误请联系会议工作人员。</p>
+            </div>
+            <div id="area" class="container-fluid" ><!-- style="display:none" -->
+                <div class="row" id="area1">
+                    <div class="area areaMain col-xs-12" id="a0">
+                        主席台
+                    </div>
+                </div>
+                <div class="row" id="area2">
+                    <div class="area col-xs-1">
+
+                    </div>
+                    <div class="area col-xs-2 area_zuoci">
+                        1-15
+                    </div>
+                    <div class="area col-xs-3 area_zuoci">
+                        16-25
+                    </div>
+                    <div class="area col-xs-3 area_zuoci">
+                        26-36
+                    </div>
+                    <div class="area col-xs-2 area_zuoci">
+                        37-50
+                    </div>
+                </div>
+                <div class="row" id="area3">
+                    <div class="area col-xs-1" style="padding: 0px;">
+                        1 <br>|<br>15
+                    </div>
+                    <div class="area areaChild col-xs-2 area_jing areaUnActive" id="a1">
+                        精
+                    </div>
+                    <div class="area areaChild col-xs-3 area_geng areaUnActive" id="b1">
+                        耕
+                    </div>
+                    <div class="area areaChild col-xs-3 area_xi areaUnActive" id="c1">
+                        细
+                    </div>
+                    <div class="area areaChild col-xs-2 area_zuo areaUnActive" id="d1">
+                        作
+                    </div>
+
+                </div>
+                <div class="row" id="area4">
+                    <div class="area col-xs-1" style="padding: 0px;">
+                        16 <br>|<br>33
+                    </div>
+                    <div class="area areaChild col-xs-2 area_jing areaUnActive" id="a2">
+                        效
+                    </div>
+                    <div class="area areaChild col-xs-3 area_lv areaUnActive" id="b2">
+                        率
+                    </div>
+                    <div class="area areaChild col-xs-3 area_ling areaUnActive" id="c2">
+                        领
+                    </div>
+                    <div class="area areaChild col-xs-2 area_xian areaUnActive" id="d2">
+                        先
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="../../bootstrap/js/bootstrap.min.js"></script>
+<script src="../js/common.js"></script>
+<script language="javascript" type="text/javascript">
+    function getMySeat(){
+        var room = "";
+        var seatUser = $("#inputName").val();
+        if(seatUser == ""){
+            alert("请输入姓名");
+            return;
+        }
+
+        var _url = path + "/seatInfo/getSeatInfoByUser";
+        var parameter = {};
+        parameter["seatUser"] = seatUser;
+        $.ajax({
+            url : _url,
+            type : "post",
+            dataType : "json",
+            data : parameter,
+            beforeSend : function(){
+
+            },
+            success : function(data){
+                var dataList = data.content;
+                if(data != null){
+
+                    $("#tips").hide();
+                    $("#seatList").show();
+                    $("#seatList").html("");
+                    $("#area").show();
+                    for(var i=1; i<=2; i++){
+                        $("#a"+i).removeClass("areaActive");
+                        $("#b"+i).removeClass("areaActive");
+                        $("#c"+i).removeClass("areaActive");
+                        $("#d"+i).removeClass("areaActive");
+                        $("#a"+i).addClass("areaUnActive");
+                        $("#b"+i).addClass("areaUnActive");
+                        $("#c"+i).addClass("areaUnActive");
+                        $("#d"+i).addClass("areaUnActive");
+                    }
+
+                    $.each(dataList, function(i,item){
+                        switch(item.seatRoom){
+                            case "A1":
+                                room = "精";
+                                break;
+                            case "B1":
+                                room = "耕";
+                                break;
+                            case "C1":
+                                room = "细";
+                                break;
+                            case "D1":
+                                room = "作";
+                                break;
+                            case "A2":
+                                room = "效";
+                                break;
+                            case "B2":
+                                room = "率";
+                                break;
+                            case "C2":
+                                room = "领";
+                                break;
+                            case "D2":
+                                room = "先";
+                                break;
+                        }
+                        if(i > 0){
+                            $("#seatList").append("<hr />");
+                        }
+                        $("#seatList").append(
+                            "<p class='lead'>区域：<u>&nbsp;" + room + "&nbsp;</u>，第<u>&nbsp;"
+                            + item.seatRow	+ "&nbsp;</u>排，第<u>&nbsp;"
+                            + item.seatCol + "&nbsp;</u>列。"
+//                            + "</p><p class='lead'>"
+                            + "<strong>"
+                            + item.seatUser + "</strong>&nbsp;&nbsp;"
+                            + item.seatDw + "&nbsp;&nbsp;"
+                            + "</p>"
+                        );
+
+
+                        switch(item.seatRoom){
+                            case "A1":
+                                $("#a1").removeClass("areaUnActive");
+                                $("#a1").addClass("areaActive");
+                                break;
+                            case "A2":
+                                $("#a2").removeClass("areaUnActive");
+                                $("#a2").addClass("areaActive");
+                                break;
+                            case "B1":
+                                $("#b1").removeClass("areaUnActive");
+                                $("#b1").addClass("areaActive");
+                                break;
+                            case "B2":
+                                $("#b2").removeClass("areaUnActive");
+                                $("#b2").addClass("areaActive");
+                                break;
+                            case "C1":
+                                $("#c1").removeClass("areaUnActive");
+                                $("#c1").addClass("areaActive");
+                                break;
+                            case "C2":
+                                $("#c2").removeClass("areaUnActive");
+                                $("#c2").addClass("areaActive");
+                                break;
+                            case "D1":
+                                $("#d1").removeClass("areaUnActive");
+                                $("#d1").addClass("areaActive");
+                                break;
+                            case "D2":
+                                $("#d2").removeClass("areaUnActive");
+                                $("#d2").addClass("areaActive");
+                                break;
+                        }
+                    });
+                }else{
+                    $("#seatList").hide();
+                    $("#tips").show();
+                    for(var i=1; i<=3; i++){
+                        $("#a"+i).removeClass("areaActive");
+                        $("#b"+i).removeClass("areaActive");
+                        $("#c"+i).removeClass("areaActive");
+                        $("#d"+i).removeClass("areaActive");
+                        $("#a"+i).addClass("areaUnActive");
+                        $("#b"+i).addClass("areaUnActive");
+                        $("#c"+i).addClass("areaUnActive");
+                        $("#d"+i).addClass("areaUnActive");
+                    }
+                    $("#area").show();
+                }
+            },
+            error : function(data){
+                var datal = data;
+                $("#seatList").hide();
+                $("#tips").show();
+                for(var i=1; i<=3; i++){
+                    $("#a"+i).removeClass("areaActive");
+                    $("#b"+i).removeClass("areaActive");
+                    $("#c"+i).removeClass("areaActive");
+                    $("#d"+i).removeClass("areaActive");
+                    $("#a"+i).addClass("areaUnActive");
+                    $("#b"+i).addClass("areaUnActive");
+                    $("#c"+i).addClass("areaUnActive");
+                    $("#d"+i).addClass("areaUnActive");
+                }
+                $("#area").show();
+            }
+        });
+
+    }
+</script>
+</html>
