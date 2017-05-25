@@ -11,76 +11,9 @@
     <script src="../js/common.js"></script>
     <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/cover.css" rel="stylesheet">
-    <script>
-        var _hmt = _hmt || [];
-        (function() {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?1ace5771cdaa36bb4b6883c12c69b85a";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-    <script language="javascript" type="text/javascript">
-
-        window.onload = getWeather;
-
-        function getWeather(){
-
-            var _url = path + "/seatInfo/getWeather.action";
-            var parameter = {};
-            parameter["key"] = "";
-            $.ajax({
-                url : _url,
-                type : "post",
-                dataType : "json",
-                data : parameter,
-                beforeSend : function(){
-                },
-                success : function(data){
-                    if(data.flag == "s"){
-                        $("#tips").html("");
-                        var realtime = data.realtime;
-                        var weather = realtime.weather;
-                        var wind = realtime.wind;
-                        var fature = data.weather;
-                        $("#tips").append(
-                            "<p>" + weather.info + "，" + weather.temperature + "℃，" + wind.direct + wind.power +"</p>"
-                        );
-
-                        $.each(fature, function(i,item){
-                            var day = item.info.day;
-                            var night = item.info.night;
-                            $("#wbody").append(
-                                "<tr>" +
-                                "<td>" + item.date.substring(5,10) + "</td>" +
-                                "<td>" + day[1]  + "</td>" +
-                                "<td>" + day[2] + "~" + night[2] + "℃" + "</td>" +
-                                + "</tr>"
-                            );
-                        });
-                    }else{
-
-                    }
-                },
-                error : function(){
-
-                }
-            });
-        }
-    </script>
-    <script>
-        var _hmt = _hmt || [];
-        (function() {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?1ace5771cdaa36bb4b6883c12c69b85a";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
-
-</head>
 <body>
+</head>
 <div class="container">
     <div class="row page_head">
         <img alt="" src="../image/pageHead.png" class="col-md-7 col-sm-7 col-xs-12">
@@ -90,23 +23,37 @@
             <li class="active" id="weLi"><a href="weather.html" target="_parent" >天气预报</a></li>
         </ul>
     </div>
-    <div class="row page_body table-responsive">
-        <p class="lead">当前天气</p>
-        <div id="tips" name="tips" >
-            <p class="lead">----</p>
+    <div class="row page_body">
+        <div class="col-xs-6">
+            <div class="panel panel-stanley panel-new">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        6月2日
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <img src="../image/0.png" height="100" width="100"/>
+                    <p>晴天</p>
+                    <p>15~20℃</p>
+                    <p>西风3级</p>
+                </div>
+            </div>
         </div>
-
-        <table class="table">
-            <thead>
-            <tr>
-                <th>日期</th>
-                <th>天气</th>
-                <th>温度</th>
-            </tr>
-            </thead>
-            <tbody id="wbody">
-            </tbody>
-        </table>
+        <div class="col-xs-6">
+            <div class="panel panel-stanley panel-new">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        6月3日
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <img src="../image/0.png" height="100" width="100"/>
+                    <p>晴天</p>
+                    <p>15~20℃</p>
+                    <p>西风3级</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
