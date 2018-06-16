@@ -236,6 +236,8 @@ body {
 
 .panel-stanley{
     border-color: #ce000e;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
 .panel-stanley .panel-heading{
     color: #fff;
@@ -252,4 +254,11 @@ body {
 .panel table tr td{
     height: 30px;
     line-height: 30px;
+}
+
+.hr-stanley{
+    background-color: #ce000e;
+    border: 0px;
+    height: 1px;
+    margin: 10px;
 }

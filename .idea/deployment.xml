@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="seatmanager">
+    <serverData>
+      <paths name="seatmanager">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/usr/local/tomcat/apache-tomcat-7.0.65/webapps/SeatManager" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
