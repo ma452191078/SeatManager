@@ -6,7 +6,7 @@
 a,
 a:focus,
 a:hover {
-  color: #fff;
+  color: #c11c20;
 }
 
 /* Custom default button */
@@ -32,7 +32,6 @@ body {
 body {
   color: #c11c20;
   text-align: center;
-  text-shadow: 0 1px 3px rgba(160, 157, 157, 0.5);
 }
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
@@ -85,7 +84,6 @@ body {
 .masthead-nav > li > a:hover,
 .masthead-nav > li > a:focus {
   background-color: transparent;
-  border-bottom-color: #a9a9a9;
   border-bottom-color: #c11c20;
 }
 .masthead-nav > .active > a,
@@ -219,6 +217,7 @@ body {
 	font-size:10px;
 	word-break:keep-all;           /* 不换行 */
 	white-space:nowrap;          /* 不换行 */
+    color: #ce000e;
 }
 
 .page_head {
@@ -240,7 +239,7 @@ body {
     border-top-right-radius: 3px;
 }
 .panel-stanley .panel-heading{
-    color: #fff;
+    color: #ce000e;
     background-color: #ce000e;
     border-color: #ce000e;
 }
